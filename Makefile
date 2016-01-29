@@ -1,6 +1,6 @@
 CC      = clang
 BIN     = config_gen key_gen otp
-DEFDIRS = objdir logdir
+DIRS    = objdir cfgdir keydir
 SRC     = main.c config_file_generator.c key_generator.c otp.c
 LIBS    = -lm
 CFLAGS  = -g3 -Wall
@@ -8,17 +8,21 @@ MKDIR   = mkdir
 EXT     = c
 SRCDIR  = src
 OBJDIR  = obj
-LOGDIR  = log
+CFGDIR  = cfg
+KEYDIR  = key
 OBJ     := $(subst .$(EXT),.o,$(SRC))
 OBJ     := $(addprefix $(OBJDIR)/, $(OBJ))
  
-all: $(DEFDIRS) $(BIN)
+all: $(DIRS) $(BIN)
 
 objdir:
 	$(MKDIR) -p $(OBJDIR)
 
-logdir:
-	$(MKDIR) -p $(LOGDIR)
+cfgdir:
+	$(MKDIR) -p $(CFGDIR)
+
+keydir:
+	$(MKDIR) -p $(KEYDIR)
 
 # noising: $(OBJDIR)/noising.o $(OBJDIR)/error.o $(OBJDIR)/png_io.o $(OBJDIR)/utils.o
 # 	@echo "Link $< ..."
@@ -26,11 +30,11 @@ logdir:
  
 config_gen: $(OBJDIR)/config_file_generator.o
 	@echo "Link $< ..."
-	@$(CC) -o $(OBJDIR)/config_file_generator.o $(LIBS)
+	@$(CC) -o $@ $(OBJDIR)/config_file_generator.o $(LIBS)
  
 key_gen: $(OBJDIR)/key_generator.o
 	@echo "Link $< ..."
-	@$(CC) -o $(OBJDIR)/key_generator.o $(LIBS)
+	@$(CC) -o $@ $(OBJDIR)/key_generator.o $(LIBS)
  
 otp: $(OBJDIR)/main.o $(OBJDIR)/otp.o
 	@echo "Link $< ..."
