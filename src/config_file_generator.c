@@ -8,18 +8,22 @@ int main(int argc, char *argv[])
     int val = 0;
     int i = 0;
     FILE *fd = 0;
+    char outfile[40];
 
     if (argc < 2)
     {
-        // printf ("Usage: ./%s <number of config params>\n", argv[0]);
-        printf ("Usage: ./otp <number of config params>\n");
+        printf ("Usage: %s <number of config params>\n", argv[0]);
         return -1;
     }
 
     max = atoi (argv[1]);
     printf("Requested Number: %d\n", max);
 
-    fd = fopen ("config.txt", "w+a");
+    time_t secs = time(NULL);
+    struct tm *local = localtime (&secs);
+    sprintf (outfile, "cfg/config_%d_%d_%d_%d_%d_%d.txt", local->tm_year+1900, local->tm_mon+1, local->tm_mday, local->tm_hour, local->tm_min, local->tm_sec);
+
+    fd = fopen (outfile, "w+a");
     if (fd == NULL)
     {
         printf ("[ERROR] ... Unable to open file for writing...\n");
