@@ -1,6 +1,6 @@
 CC      = clang
 BIN     = configgen keygen otp
-DIRS    = objdir cfgdir keydir
+DIRS    = objdir cfgdir keydir encdir decdir
 SRC     = main.c config_file_generator.c key_generator.c otp.c utils.c
 LIBS    = -lm
 CFLAGS  = -g3 -Wall
@@ -10,6 +10,8 @@ SRCDIR  = src
 OBJDIR  = obj
 CFGDIR  = cfg
 KEYDIR  = key
+ENCDIR  = enc
+DECDIR  = dec
 OBJ     := $(subst .$(EXT),.o,$(SRC))
 OBJ     := $(addprefix $(OBJDIR)/, $(OBJ))
  
@@ -23,6 +25,12 @@ cfgdir:
 
 keydir:
 	$(MKDIR) -p $(KEYDIR)
+
+encdir:
+	$(MKDIR) -p $(ENCDIR)
+
+decdir:
+	$(MKDIR) -p $(DECDIR)
 
 # noising: $(OBJDIR)/noising.o $(OBJDIR)/error.o $(OBJDIR)/png_io.o $(OBJDIR)/utils.o
 # 	@echo "Link $< ..."
