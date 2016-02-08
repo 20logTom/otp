@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "otp.h"
 
 int main(int argc, char *argv[])
@@ -56,6 +57,21 @@ int main(int argc, char *argv[])
 	    printf ("[ERROR] ... Unable to allocate memory for config values...\n");
 	    return -1;
 	}
+
+	// determine requested operation
+	if (!strcmp(argv[1], "encode"))
+	{
+		printf ("[INFO] ... encoding...\n");
+	}
+	else if (!strcmp(argv[1], "decode"))
+	{
+		printf ("[INFO] ... decoding...\n");
+	}
+	else
+	{
+		printf ("[ERROR] ... Invalid operation...\n");
+		return -1;
+	}
 	
 	// interpret values
 	error = interpret_config_values (fdfile, configvalues, lines);
@@ -65,10 +81,25 @@ int main(int argc, char *argv[])
 	    return -1;
 	}
 	
+	// close all files
 	fclose (fdfile);
 	if (fdfile == NULL)
 	{
 	    printf ("[ERROR] ... Unable to close file...\n");
+	    return -1;
+	}
+	
+	fclose (fdconfig);
+	if (fdconfig == NULL)
+	{
+	    printf ("[ERROR] ... Unable to close config file...\n");
+	    return -1;
+	}
+	
+	fclose (fdkey);
+	if (fdkey == NULL)
+	{
+	    printf ("[ERROR] ... Unable to close file with private key...\n");
 	    return -1;
 	}
 	
