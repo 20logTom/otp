@@ -3,7 +3,7 @@
 
 #include <stdlib.h>
 
-int count_lines (FILE *fd);
-int interpret_config_values (FILE *fd, int vals[], int lines);
+int encode (FILE *fdsrc, FILE *fdtgt, FILE *fdcfg, FILE *fdkey);
+int decode (FILE *fdsrc, FILE *fdtgt, FILE *fdcfg, FILE *fdkey);
 
 #endif // OTP_H

@@ -23,9 +23,9 @@ int count_lines (FILE *fd)
 
 int interpret_config_values (FILE *fd, int vals[], int lines)
 {
-    int i = 0;
-    int j = 0;
-    char ch = 0;
+    // int i = 0;
+    // int j = 0;
+    // char ch = 0;
     int val = 0;
 
     if (fd == NULL)
@@ -52,4 +52,45 @@ int interpret_config_values (FILE *fd, int vals[], int lines)
     return 0;
 }
 
+
+int encode (FILE *fdsrc, FILE *fdtgt, FILE *fdcfg, FILE *fdkey)
+{
+	int *configvalues = 0;
+	int lines = 0;
+	int error = 0;
+
+	printf ("[INFO] ... Start encoding...\n");
+
+	// count lines in the read files
+	lines = count_lines (fdsrc);
+	if (lines < 0)
+	{
+	    printf ("[ERROR] ... Unable to count lines in file...\n");
+	    return -1;
+	}
+	
+	configvalues = malloc (sizeof(int)*lines);
+	if (configvalues == NULL)
+	{
+	    printf ("[ERROR] ... Unable to allocate memory for config values...\n");
+	    return -1;
+	}
+
+	// interpret values
+	error = interpret_config_values (fdsrc, configvalues, lines);
+	if (error != 0)
+	{
+	    printf ("[ERROR] ... Unable to interpret config values...\n");
+	    return -1;
+	}
+	
+	return 0;
+}
+
+int decode (FILE *fdsrc, FILE *fdtgt, FILE *fdcfg, FILE *fdkey)
+{
+	printf ("[INFO] ... Start decoding...\n");
+
+	return 0;
+}
 
