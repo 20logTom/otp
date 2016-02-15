@@ -23,22 +23,27 @@ int count_lines (FILE *fd)
 
 int interpret_config_values (FILE *fd, int vals[], int lines)
 {
-    // int i = 0;
-    // int j = 0;
-    // char ch = 0;
-    int val = 0;
+	// int i = 0;
+	// int j = 0;
+	// char ch = 0;
+	int val = 0;
 
-    if (fd == NULL)
-    {
-        printf ("[ERROR] ... Invalid file descriptor...\n");
-        return -1;
-    }
+	printf ("[INFO] ... entering function \"interpret_config_values()\"...\n");
 
-    while (!feof(fd))
-    {
-        fscanf (fd, "%d", &val);
-        printf ("%d\n", val);
-    }
+	if (fd == NULL)
+	{
+		printf ("[ERROR] ... Invalid file descriptor...\n");
+		return -1;
+	}
+	
+	if (feof(fd)) printf ("[INFO] ... end of file...\n");
+	else printf("[INFO] ... not end of file...\n");
+
+	while (!feof(fd))
+	{
+		fscanf (fd, "%d", &val);
+		printf ("%d\n", val);
+	}
 
 
 //    for (i=0; i<lines; ++i)
@@ -49,7 +54,7 @@ int interpret_config_values (FILE *fd, int vals[], int lines)
 //        }
 //    }
 
-    return 0;
+	return 0;
 }
 
 
@@ -68,6 +73,8 @@ int encode (FILE *fdsrc, FILE *fdtgt, FILE *fdcfg, FILE *fdkey)
 	    printf ("[ERROR] ... Unable to count lines in file...\n");
 	    return -1;
 	}
+
+	printf ("[INFO] ... Read %d lines in source file...\n", lines);
 	
 	configvalues = malloc (sizeof(int)*lines);
 	if (configvalues == NULL)
